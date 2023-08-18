@@ -1,24 +1,86 @@
+import mockReports from './mockReports'
+import mockPlayers from './mockPlayers'
+import { faker } from '@faker-js/faker'
+
 const resolvers = {
   Query: {
-    // returns an array of Tracks that will be used to populate the homepage grid of our web client
-    tracksForHome: (_, __, { dataSources }) => {
-      return dataSources.trackAPI.getTracksForHome()
+    getAllReports: () => {
+      return mockReports
     },
-
-    // get a single track by ID, for the track page
-    track: (_, { id }, { dataSources }) => {
-      return dataSources.trackAPI.getTrack(id)
+    getReport: (_: unknown, { id }: { id: string }) => {
+      const report = mockReports.find((report) => report.id === id)
+      if (report) {
+        return report
+      }
+      throw new Error(`Report with id ${id} not found`)
+    },
+    getAllPlayers: () => mockPlayers,
+    player: (_: unknown, { id }: { id: string }) => {
+      const player = mockPlayers.find((player) => player.id === id)
+      if (player) {
+        return player
+      }
+      throw new Error(`Player with id ${id} not found`)
     }
   },
-  Track: {
-    author: ({ authorId }, _, { dataSources }) => {
-      return dataSources.trackAPI.getAuthor(authorId)
-    },
-
-    modules: ({ id }, _, { dataSources }) => {
-      return dataSources.trackAPI.getTrackModules(id)
-    }
+  Player: {
+    reports: (parent: any) => parent.reports || []
+  },
+  Report: {
+    id: () => faker.string.uuid(),
+    title: () => faker.lorem.paragraph(5),
+    player: () => ({
+      id: faker.string.uuid(),
+      fullName: faker.internet.userName(),
+      avatar: faker.image.avatar()
+    }),
+    plan: () => 1,
+    comments: () => [
+      {
+        id: faker.string.uuid(),
+        title: faker.lorem.paragraph(2),
+        createdAt: faker.date.recent(),
+        author: {
+          avatar: faker.image.avatar()
+        }
+      },
+      {
+        id: faker.string.uuid(),
+        title: faker.lorem.paragraph(2),
+        createdAt: faker.date.recent(),
+        author: {
+          avatar: faker.image.avatar()
+        }
+      }
+    ],
+    likes: () => [
+      {
+        id: faker.string.uuid(),
+        report: {
+          id: faker.string.uuid(),
+          title: faker.lorem.paragraph(5)
+        },
+        player: {
+          id: faker.string.uuid(),
+          fullName: faker.internet.userName()
+        },
+        createdAt: faker.date.recent()
+      },
+      {
+        id: faker.string.uuid(),
+        report: {
+          id: faker.string.uuid(),
+          title: faker.lorem.paragraph(5)
+        },
+        player: {
+          id: faker.string.uuid(),
+          fullName: faker.internet.userName()
+        },
+        createdAt: faker.date.recent()
+      }
+    ],
+    createdAt: () => faker.date.recent()
   }
 }
 
-module.exports = resolvers
+export default resolvers

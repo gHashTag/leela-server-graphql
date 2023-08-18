@@ -1,59 +1,48 @@
-import gql from 'graphql-tag'
-
-const typeDefs = gql`
+const typeDefs = `
   type Query {
-    "Query to get an array of all posts"
-    allPosts: [Post!]!
-    "Fetch a specific post by providing its ID"
-    post(id: ID!): Post!
-
-    "Get a list of all players"
-    allPlayers: [Player!]!
-    "Fetch a specific player by providing their ID"
+    getAllReports: [Report!]!
+    getReport(id: ID!): Report!
+    getAllPlayers: [Player!]!
     player(id: ID!): Player!
   }
 
-  "Represents a player"
   type Player {
     id: ID!
-    "Player's full name"
     fullName: String!
-    "URL of player's profile picture"
-    avatar: String
-    "Player's plan number"
-    plan: Int
-    "Previous plan number"
-    previousPlan: Int
-    "Flag indicating if player is a starter"
-    isStart: Boolean
-    "Flag indicating if player has finished"
-    isFinished: Boolean
-    "Number of consecutive sixes"
-    consecutiveSixes: Int
-    "Position before three sixes"
-    positionBeforeThreeSixes: Int
-    "List of posts by this player"
-    posts: [Post!]!
-  }
-
-  "A post contains teaching content"
-  type Post {
-    id: ID!
-    "Title of the post"
-    title: String!
-    "Author of the post"
-    author: Player!
-    "Plan number associated with the post"
+    avatar: String!
     plan: Int!
-    "List of comments on the post"
-    comments: [Comment!]!
+    previousPlan: Int!
+    isStart: Boolean!
+    isFinished: Boolean!
+    consecutiveSixes: Int!
+    positionBeforeThreeSixes: Int!
+    reports: [Report!]!
+    createdAt: String!
   }
 
-  "A Comment represents a single teaching unit"
+  type Report {
+    id: ID!
+    plan: Int!
+    player: Player!
+    title: String!
+    createdAt: String!
+    likes: [Like!]!
+    comments: [Comment!]!
+
+  }
+
   type Comment {
     id: ID!
-    "Title of the comment"
     title: String!
+    createdAt: String!
+    author: Player!
+  }
+
+  type Like {
+    id: ID!
+    report: Report!
+    player: Player!
+    createdAt: String!
   }
 `
 
