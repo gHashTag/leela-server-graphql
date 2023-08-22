@@ -5,11 +5,13 @@ import { makeExecutableSchema } from '@graphql-tools/schema'
 
 import resolvers from './resolvers'
 import typeDefs from './schema'
+import { mocks } from './mocks'
 
 async function runServer() {
   const server = new ApolloServer({
     schema: addMocksToSchema({
       schema: makeExecutableSchema({ typeDefs, resolvers }),
+      mocks,
       preserveResolvers: true
     })
   })

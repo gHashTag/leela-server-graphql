@@ -16,8 +16,8 @@ const mocks = {
     player: () => {}
   }),
   Player: () => ({
-    // id: faker.string.uuid(),
-    id: '0x61715aE5947Bdc45f4853639d1a48962051622d5',
+    id: faker.string.uuid(),
+    rallyAccount: '0x61715aE5947Bdc45f4853639d1a48962051622d5',
     fullName: faker.internet.userName(),
     avatar: faker.image.avatar(),
     plan: faker.number.int({ min: 1, max: 72 }),
@@ -27,10 +27,11 @@ const mocks = {
     consecutiveSixes: faker.number.int(3),
     positionBeforeThreeSixes: faker.number.int(2),
     reports: [],
-    createdAt: faker.date.recent()
+    createdAt: faker.date.anytime()
   }),
   Report: () => ({
     id: faker.string.uuid(),
+    rallyAccount: '0x61715aE5947Bdc45f4853639d1a48962051622d5',
     title: faker.lorem.paragraph(5),
     player: {
       id: faker.string.uuid(),
@@ -42,12 +43,12 @@ const mocks = {
       {
         id: faker.string.uuid(),
         title: faker.lorem.paragraph(2),
-        createdAt: faker.date.recent()
+        createdAt: faker.date.anytime()
       },
       {
         id: faker.string.uuid(),
         title: faker.lorem.paragraph(2),
-        createdAt: faker.date.recent()
+        createdAt: faker.date.anytime()
       }
     ],
     likes: [
@@ -61,7 +62,7 @@ const mocks = {
           id: faker.string.uuid(),
           fullName: faker.internet.userName()
         },
-        createdAt: faker.date.recent()
+        createdAt: faker.date.anytime()
       },
       {
         id: faker.string.uuid(),
@@ -74,15 +75,15 @@ const mocks = {
           // id: '0x61715aE5947Bdc45f4853639d1a48962051622d5',
           fullName: faker.internet.userName()
         },
-        createdAt: faker.date.recent()
+        createdAt: faker.date.anytime()
       }
     ],
-    createdAt: faker.date.recent()
+    createdAt: faker.date.anytime()
   }),
   Comment: () => ({
     id: faker.string.uuid(),
     title: faker.lorem.paragraph(5),
-    createdAt: faker.date.recent()
+    createdAt: faker.date.anytime()
   }),
   Like: () => ({
     id: faker.string.uuid(),
@@ -96,7 +97,7 @@ const mocks = {
       fullName: faker.internet.userName()
       // ... (другие поля пользователя)
     },
-    createdAt: faker.date.recent()
+    createdAt: faker.date.anytime()
   })
 }
 
